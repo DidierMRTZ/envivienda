@@ -1,7 +1,7 @@
 export class UserVerified {
-    value: string;
+    value: boolean;
   
-    constructor(value: string) {
+    constructor(value: boolean) {
       this.value = value;
     }
   }

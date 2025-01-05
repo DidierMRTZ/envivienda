@@ -29,17 +29,59 @@ export class ExpressUserController {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const { createdAt, email, id, name } = req.body as {
-        id: string;
-        name: string;
-        email: string;
-        createdAt: string;
+      const {
+        id,
+        countryId,
+        userType,
+        firstName,
+        lastName,
+        companyName,
+        typeOfIdDocu,
+        idNumber,
+        dv,
+        email,
+        number,
+        password,
+        createdAt,
+        updateAt,
+        status,
+        verified
+      }
+       = req.body as {
+        id: string,
+        countryId: string,
+        userType: string,
+        firstName: string,
+        lastName: string,
+        companyName: string,
+        typeOfIdDocu: string,
+        idNumber: string,
+        dv: number,
+        email: string,
+        number: number,
+        password: string,
+        createdAt: Date,
+        updateAt: Date,
+        status: string,
+        verified: boolean,
       };
       await ServiceContainer.user.create.run(
         id,
-        name,
+        countryId,
+        userType,
+        firstName,
+        lastName,
+        companyName,
+        typeOfIdDocu,
+        idNumber,
+        dv,
         email,
+        number,
+        password,
         new Date(createdAt),
+        new Date(updateAt),
+        status,
+        verified
       );
 
       return res.status(201).send();
@@ -50,17 +92,58 @@ export class ExpressUserController {
 
   async edit(req: Request, res: Response, next: NextFunction) {
     try {
-      const { createdAt, email, id, name } = req.body as {
-        id: string;
-        name: string;
-        email: string;
-        createdAt: string;
+      const {
+        id,
+        countryId,
+        userType,
+        firstName,
+        lastName,
+        companyName,
+        typeOfIdDocu,
+        idNumber,
+        dv,
+        email,
+        number,
+        password,
+        createdAt,
+        updateAt,
+        status,
+        verified
+      } = req.body as {
+        id: string,
+        countryId: string,
+        userType: string,
+        firstName: string,
+        lastName: string,
+        companyName: string,
+        typeOfIdDocu: string,
+        idNumber: string,
+        dv: number,
+        email: string,
+        number: number,
+        password: string,
+        createdAt: Date,
+        updateAt: Date,
+        status: string,
+        verified: boolean,
       };
       await ServiceContainer.user.edit.run(
         id,
-        name,
+        countryId,
+        userType,
+        firstName,
+        lastName,
+        companyName,
+        typeOfIdDocu,
+        idNumber,
+        dv,
         email,
+        number,
+        password,
         new Date(createdAt),
+        new Date(updateAt),
+        status,
+        verified
       );
 
       return res.status(204).send();

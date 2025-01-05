@@ -1,4 +1,4 @@
-export class UserIdNumbers {
+export class UserIdNumber {
     value: string;
   
     constructor(value: string) {

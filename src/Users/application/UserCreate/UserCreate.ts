@@ -31,18 +31,31 @@ export class UserCreate {
     idNumber: string,
     dv: number,
     email: string,
-    number: string,
+    number: number,
     password: string,
     createdAt: Date,
     updateAt: Date,
     status: string,
-    verified: string,
+    verified: boolean,
   ): Promise<void> {
     const user = new User(
       new UserId(id),
-      new UserName(name),
+      new UserCountryId(countryId),
+      new UserType(userType),
+      new UserFirstName(firstName),
+      new UserLastName(lastName),
+      new UserCompanyName(companyName),
+      new UserTypeOfIdDocu(typeOfIdDocu),
+      new UserIdNumber(idNumber),
+      new UserDv(dv),
       new UserEmail(email),
-      new UserCreatedAt(createdAt)
+      new UserNumber(number),
+      new UserPassword(password),
+      new UserCreatedAt(createdAt),
+      new UserUpdateAt(updateAt),
+      new UserStatus(status),
+      new UserVerified(verified),
+    
     );
 
     return this.repository.create(user);

@@ -1,7 +1,7 @@
 export class UserCountryId {
-    value: number;
+    value: string;
   
-    constructor(value: number) {
+    constructor(value: string) {
       this.value = value;
     }
   }

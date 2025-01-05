@@ -1,16 +1,40 @@
 import { Pool } from "pg";
-import { UserRepository } from "../domain/UserRepository";
 import { User } from "../domain/User";
-import { UserId } from "../domain/UserId";
-import { UserName } from "../domain/UserName";
 import { UserEmail } from "../domain/UserEmail";
+import { UserId } from "../domain/UserId";
+import { UserFirstName } from "../domain/UserFirstName";
+import { UserLastName } from "../domain/UserLastName";
+import { UserCompanyName } from "../domain/UserCompanyName";
+import { UserTypeOfIdDocu } from "../domain/UserTypeOfIdDocu";
+import { UserCountryId } from "../domain/UserCountryId";
+import { UserType } from "../domain/UserType";
+import { UserIdNumber } from "../domain/UserIdNumber";
+import { UserDv } from "../domain/UserDv";
+import { UserNumber } from "../domain/UserNumber";
+import { UserPassword } from "../domain/UserPassword";
 import { UserCreatedAt } from "../domain/UserCreatedAt";
+import { UserUpdateAt } from "../domain/UserUpdateAt";
+import { UserStatus } from "../domain/UserStatus";
+import { UserVerified } from "../domain/UserVerified";
+import { UserRepository } from "../domain/UserRepository";
 
 type PostgresUser = {
-  id: string;
-  name: string;
-  email: string;
-  created_at: Date;
+  id: string,
+  countryId: string,
+  userType: string,
+  firstName: string,
+  lastName: string,
+  companyName: string,
+  typeOfIdDocu: string,
+  idNumber: string,
+  dv: number,
+  email: string,
+  number: number,
+  password: string,
+  createdAt: Date,
+  updateAt: Date,
+  status: string,
+  verified: boolean,
 };
 
 export class PostgresUserRepository implements UserRepository {
@@ -25,7 +49,7 @@ export class PostgresUserRepository implements UserRepository {
   async create(user: User): Promise<void> {
     const query = {
       text: "INSERT INTO users (id, name, email) VALUES ($1, $2, $3)",
-      values: [user.id.value, user.name.value, user.email.value],
+      values: [user.id.value, user.firstName.value, user.email.value],
     };
 
     await this.client.query(query);
@@ -61,7 +85,7 @@ export class PostgresUserRepository implements UserRepository {
   async edit(user: User): Promise<void> {
     const query = {
       text: "UPDATE users SET name = $1, email = $2 WHERE id = $3",
-      values: [user.name.value, user.email.value, user.id.value],
+      values: [user.firstName.value, user.email.value, user.id.value],
     };
 
     await this.client.query(query);
@@ -79,9 +103,21 @@ export class PostgresUserRepository implements UserRepository {
   private mapToDomain(user: PostgresUser): User {
     return new User(
       new UserId(user.id),
-      new UserName(user.name),
+      new UserCountryId(user.countryId),
+      new UserType(user.userType),
+      new UserFirstName(user.firstName),
+      new UserLastName(user.lastName),
+      new UserCompanyName(user.companyName),
+      new UserTypeOfIdDocu(user.typeOfIdDocu),
+      new UserIdNumber(user.idNumber),
+      new UserDv(user.dv),
       new UserEmail(user.email),
-      new UserCreatedAt(user.created_at)
+      new UserNumber(user.number),
+      new UserPassword(user.password),
+      new UserCreatedAt(user.createdAt),
+      new UserUpdateAt(user.updateAt),
+      new UserStatus(user.status),
+      new UserVerified(user.verified),
     );
   }
 }
