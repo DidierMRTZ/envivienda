@@ -6,11 +6,10 @@ const UserGetOneById_1 = require("../../Users/application/UserGetOneById/UserGet
 const UserCreate_1 = require("../../Users/application/UserCreate/UserCreate");
 const UserEdit_1 = require("../../Users/application/UserEdit/UserEdit");
 const UserDelete_1 = require("../../Users/application/UserDelete/UserDelete");
-//import { PostgresUserRepository } from "../../../lib/User/infrastructure/PostgresUserRepository";
-//import { env } from "./env";
-const InMemoryUserRepository_1 = require("../../Users/infrastructure/InMemoryUserRepository");
+const PostgresUserRepository_1 = require("../../Users/infrastructure/PostgresUserRepository");
 // const userRepository = new PostgresUserRepository(env.DATABASE_URL);
-const userRepository = new InMemoryUserRepository_1.InMemoryUserRepository();
+const userRepository = new PostgresUserRepository_1.PostgresUserRepository("postgres://myuser:mypassword@localhost:5432/mydatabase");
+// const userRepository = new InMemoryUserRepository()
 exports.ServiceContainer = {
     user: {
         getAll: new UserGetAll_1.UserGetAll(userRepository),

@@ -37,8 +37,40 @@ class PostgresUserRepository {
     create(user) {
         return __awaiter(this, void 0, void 0, function* () {
             const query = {
-                text: "INSERT INTO users (id, name, email) VALUES ($1, $2, $3)",
-                values: [user.id.value, user.firstName.value, user.email.value],
+                text: `INSERT INTO users (
+        id, 
+        country_id, 
+        user_type, 
+        first_name, 
+        last_name, 
+        company_name, 
+        type_of_id_docu, 
+        id_number, 
+        dv, 
+        email, 
+        number, 
+        password, 
+        status, 
+        verified
+      ) VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14
+      )`,
+                values: [
+                    user.id.value,
+                    user.countryId.value,
+                    user.userType.value,
+                    user.firstName.value,
+                    user.lastName.value,
+                    user.companyName.value,
+                    user.typeOfIdDocu.value,
+                    user.idNumber.value,
+                    user.dv.value,
+                    user.email.value,
+                    user.number.value,
+                    user.password.value,
+                    user.status.value,
+                    user.verified.value,
+                ],
             };
             yield this.client.query(query);
         });
@@ -59,9 +91,9 @@ class PostgresUserRepository {
                 values: [id.value],
             };
             const result = yield this.client.query(query);
-            if (result.rows.length === 0) {
-                return null;
-            }
+            // if (result.rows.length === 0) {
+            //   return null;
+            // }
             const row = result.rows[0];
             return this.mapToDomain(row);
         });
@@ -69,8 +101,42 @@ class PostgresUserRepository {
     edit(user) {
         return __awaiter(this, void 0, void 0, function* () {
             const query = {
-                text: "UPDATE users SET name = $1, email = $2 WHERE id = $3",
-                values: [user.firstName.value, user.email.value, user.id.value],
+                text: `
+        UPDATE users
+        SET 
+          first_name = $1,
+          last_name = $2,
+          email = $3,
+          country_id = $4,
+          user_type = $5,
+          company_name = $6,
+          type_of_id_docu = $7,
+          id_number = $8,
+          dv = $9,
+          number = $10,
+          password = $11,
+          status = $12,
+          verified = $13,
+          updated_at = $14
+        WHERE id = $15
+      `,
+                values: [
+                    user.firstName,
+                    user.lastName,
+                    user.email,
+                    user.countryId,
+                    user.userType,
+                    user.companyName,
+                    user.typeOfIdDocu,
+                    user.idNumber,
+                    user.dv,
+                    user.number,
+                    user.password,
+                    user.status,
+                    user.verified,
+                    user.updateAt,
+                    user.id,
+                ],
             };
             yield this.client.query(query);
         });
@@ -85,7 +151,7 @@ class PostgresUserRepository {
         });
     }
     mapToDomain(user) {
-        return new User_1.User(new UserId_1.UserId(user.id), new UserCountryId_1.UserCountryId(user.countryId), new UserType_1.UserType(user.userType), new UserFirstName_1.UserFirstName(user.firstName), new UserLastName_1.UserLastName(user.lastName), new UserCompanyName_1.UserCompanyName(user.companyName), new UserTypeOfIdDocu_1.UserTypeOfIdDocu(user.typeOfIdDocu), new UserIdNumber_1.UserIdNumber(user.idNumber), new UserDv_1.UserDv(user.dv), new UserEmail_1.UserEmail(user.email), new UserNumber_1.UserNumber(user.number), new UserPassword_1.UserPassword(user.password), new UserCreatedAt_1.UserCreatedAt(user.createdAt), new UserUpdateAt_1.UserUpdateAt(user.updateAt), new UserStatus_1.UserStatus(user.status), new UserVerified_1.UserVerified(user.verified));
+        return new User_1.User(new UserId_1.UserId(user.id), new UserCountryId_1.UserCountryId(user.country_id), new UserType_1.UserType(user.user_type), new UserFirstName_1.UserFirstName(user.first_name), new UserLastName_1.UserLastName(user.last_name), new UserCompanyName_1.UserCompanyName(user.company_name), new UserTypeOfIdDocu_1.UserTypeOfIdDocu(user.type_of_id_docu), new UserIdNumber_1.UserIdNumber(user.id_number), new UserDv_1.UserDv(user.dv), new UserEmail_1.UserEmail(user.email), new UserNumber_1.UserNumber(user.number), new UserPassword_1.UserPassword(user.password), new UserCreatedAt_1.UserCreatedAt(user.created_at), new UserUpdateAt_1.UserUpdateAt(user.updated_at), new UserStatus_1.UserStatus(user.status), new UserVerified_1.UserVerified(user.verified));
     }
 }
 exports.PostgresUserRepository = PostgresUserRepository;

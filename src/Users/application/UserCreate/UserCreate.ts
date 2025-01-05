@@ -55,7 +55,6 @@ export class UserCreate {
       new UserUpdateAt(updateAt),
       new UserStatus(status),
       new UserVerified(verified),
-    
     );
 
     return this.repository.create(user);
